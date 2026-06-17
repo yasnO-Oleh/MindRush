@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 92" role="img" aria-label="MindRush">
+  <defs>
+    <linearGradient id="word" x1="0" x2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="0.56" stop-color="#a53cff"/>
+      <stop offset="1" stop-color="#28a8ff"/>
+    </linearGradient>
+    <linearGradient id="brain" x1="0" x2="1">
+      <stop offset="0" stop-color="#ff4dff"/>
+      <stop offset="1" stop-color="#00d8ff"/>
+    </linearGradient>
+    <filter id="logoGlow">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <g filter="url(#logoGlow)" fill="none" stroke="url(#brain)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M52 22c-13-9-31 0-31 17 0 4 1 8 4 11-7 8-2 22 9 23 4 12 22 11 27 1V22z"/>
+    <path d="M70 22c13-9 31 0 31 17 0 4-1 8-4 11 7 8 2 22-9 23-4 12-22 11-27 1V22z"/>
+    <path d="M43 34c-7 2-11 8-10 15M44 59c-6 0-10 3-12 8M79 34c7 2 11 8 10 15M78 59c6 0 10 3 12 8"/>
+    <path d="M61 28v40"/>
+  </g>
+  <text x="122" y="61" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="42" font-weight="900" font-style="italic" fill="url(#word)">MindRush</text>
+</svg>

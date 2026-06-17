@@ -1,0 +1,10 @@
+.git
+.gitignore
+*.md
+.idea
+.mvn
+target/
+build/
+.DS_Store
+Dockerfile
+docker-compose.yml

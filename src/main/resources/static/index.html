@@ -1,0 +1,656 @@
+﻿<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DemoApp Jeopardy</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <nav class="start-nav">
+        <img class="brand-logo" src="assets/mindrush-logo.svg" alt="MindRush">
+        <div class="hero-tools">
+          <label class="language-switch">
+            <span>Language</span>
+            <select id="language-select">
+              <option value="uk">Українська</option>
+              <option value="en">English</option>
+              <option value="de">Deutsch</option>
+            </select>
+          </label>
+      </nav>
+      <section class="hero-main">
+        <div class="hero-copy-block">
+          <h1>MindRush</h1>
+          <p class="hero-copy">Прокачай свій розум. Будь першим!</p>
+        </div>
+        <img class="hero-brain" src="assets/hero-brain.svg" alt="">
+      </section>
+    </header>
+
+    <main id="auth-screen" class="screen">
+      <section class="panel auth-screen-panel">
+        <div class="auth-grid">
+          <form id="register-form" class="stacked-form compact-stack auth-card auth-card-register">
+            <div class="auth-card-head">
+              <span class="auth-icon auth-icon-user"></span>
+              <div>
+                <h3>Реєстрація</h3>
+                <p>Створи акаунт, щоб почати гру</p>
+              </div>
+            </div>
+            <label>
+              Ім'я користувача
+              <input id="register-username" type="text" autocomplete="username" required>
+            </label>
+              <label>
+                Пароль
+                <input id="register-password" type="password" autocomplete="new-password" minlength="8" pattern="^(?=.*[A-Za-z])(?=.*\d)\S+$" required>
+              </label>
+              <p id="register-password-note" class="auth-note">Пароль має містити щонайменше 8 символів, літери й цифри, без пробілів.</p>
+              <button type="submit">Створити акаунт</button>
+            </form>
+
+          <form id="login-form" class="stacked-form compact-stack auth-card auth-card-login">
+            <div class="auth-card-head">
+              <span class="auth-icon auth-icon-lock"></span>
+              <div>
+                <h3>Вхід</h3>
+                <p>Увійди у свій акаунт</p>
+              </div>
+            </div>
+            <label>
+              Ім'я користувача
+              <input id="login-username" type="text" autocomplete="username" required>
+            </label>
+            <label>
+              Пароль
+              <input id="login-password" type="password" autocomplete="current-password" required>
+            </label>
+            <button type="submit">Увійти</button>
+          </form>
+
+          <form id="guest-form" class="stacked-form compact-stack auth-card auth-card-guest">
+            <div class="auth-card-head">
+              <span class="auth-icon auth-icon-bolt"></span>
+              <div>
+                <h3>Гостьовий вхід</h3>
+                <p>Грай без реєстрації</p>
+              </div>
+            </div>
+            <label>
+              Нікнейм
+              <input id="guest-nickname" type="text" placeholder="Введіть нікнейм" required>
+            </label>
+            <p id="guest-note" class="auth-note">Як гість ви зможете грати, але не зможете створювати паки та ділитися ними з ком'юніті.</p>
+            <button type="submit" class="secondary-button">Зайти як гість</button>
+          </form>
+        </div>
+      </section>
+
+      <section class="start-feature-grid">
+        <article class="start-feature-card">
+          <img src="assets/icon-pack.svg" alt="">
+          <div>
+            <h3>Конструктор паків</h3>
+            <p>Створюй власні паки питань вбудованим редактором</p>
+          </div>
+        </article>
+        <article class="start-feature-card">
+          <img src="assets/icon-community.svg" alt="">
+          <div>
+            <h3>Паки від спільноти</h3>
+            <p>Грай у паки, створені іншими гравцями</p>
+          </div>
+        </article>
+        <article class="start-feature-card">
+          <img src="assets/icon-trophy.svg" alt="">
+          <div>
+            <h3>Змагайся та перемагай</h3>
+            <p>Підвищуй свій рейтинг і ставай найкращим</p>
+          </div>
+        </article>
+      </section>
+    </main>
+    <main id="menu-screen" class="screen hidden">
+      <section class="panel topbar-panel">
+        <img class="menu-logo" src="assets/mindrush-logo.svg" alt="MindRush">
+        <div>
+          <p class="eyebrow">Main Menu</p>
+          <h2 id="session-title">Вітаю!</h2>
+          <p id="session-status">Ти успішно увійшов у систему.</p>
+        </div>
+        <button id="logout-btn" type="button" class="secondary-button">Вихід</button>
+      </section>
+
+      <section class="menu-layout">
+        <aside class="panel menu-panel">
+          <h3>Головне меню</h3>
+          <div class="menu-buttons">
+            <button id="menu-create-game-btn" type="button" class="menu-button">Створити гру</button>
+            <button id="menu-join-game-btn" type="button" class="menu-button">Приєднатися до гри</button>
+            <button id="menu-pack-builder-btn" type="button" class="menu-button">Конструктор паків</button>
+            <button id="menu-community-packs-btn" type="button" class="menu-button">Переглянути ком'юніті паки</button>
+            <button id="menu-settings-btn" type="button" class="menu-button">Налаштування</button>
+            <button id="menu-exit-btn" type="button" class="menu-button menu-button-danger">Вихід</button>
+          </div>
+        </aside>
+
+        <section class="panel content-panel">
+          <div id="home-view" class="menu-view">
+            <div class="panel-heading">
+              <h2>Головне меню</h2>
+              <p>Вибери один із режимів ліворуч. Поточні робочі режими вже підключені для `Створити гру` і `Приєднатися до гри`.</p>
+            </div>
+            <div class="menu-cards">
+              <article class="menu-card">
+                <h3>Створити гру</h3>
+                <p>Хост-режим для ведучого: вибір паку, створення матчу, додавання гравців, дошка та рахунок.</p>
+              </article>
+              <article class="menu-card">
+                <h3>Приєднатися до гри</h3>
+                <p>Екран гравця: вибір гри, вибір свого профілю, live-підключення і `Buzz`.</p>
+              </article>
+              <article class="menu-card">
+                <h3>Наступні модулі</h3>
+                <p>Конструктор паків, ком'юніті паки й налаштування я зараз підготую як окремі екрани-заготовки.</p>
+              </article>
+            </div>
+          </div>
+
+          <div id="create-game-view" class="menu-view hidden">
+            <div class="subscreen-header">
+              <div>
+                <p class="eyebrow">Host Desk</p>
+                <h2>Створити гру</h2>
+              </div>
+              <button type="button" class="secondary-button back-menu-btn">Назад у меню</button>
+            </div>
+
+            <div class="app-layout">
+              <aside class="sidebar">
+                <section class="panel game-setup-panel">
+                  <div class="panel-heading">
+                    <h2>Нова гра</h2>
+                    <p>Вибери пак зі своєї бібліотеки та з ком'юніті паків, які ти вже додав собі.</p>
+                  </div>
+
+                  <div class="stacked-form compact-stack">
+                    <label>
+                      Пак
+                      <select id="pack-select">
+                        <option value="">Choose a pack</option>
+                      </select>
+                    </label>
+                    <button id="create-game-btn" type="button">Створити гру</button>
+                  </div>
+
+                  <div id="current-game-card" class="current-game hidden">
+                    <p class="game-chip">Поточна гра</p>
+                    <h3 id="current-game-name">Гра не створена</h3>
+                    <p id="current-game-meta">Після створення тут з'явиться інформація про матч.</p>
+                  </div>
+
+                  <form id="player-form" class="stacked-form compact-stack hidden">
+                    <h3>Додати гравця</h3>
+                    <label>
+                      Ім'я гравця
+                      <input id="player-name-input" type="text" placeholder="Наприклад: Oleg">
+                    </label>
+                    <button id="add-player-btn" type="submit">Додати до гри</button>
+                  </form>
+                </section>
+              </aside>
+
+              <section class="main-stage hidden" aria-hidden="true">
+                <section class="panel scoreboard-panel">
+                  <div class="panel-heading">
+                    <h2>Табло</h2>
+                    <p>Тут видно поточних гравців та їхній рахунок.</p>
+                  </div>
+
+                  <div id="scoreboard-empty" class="empty-state">
+                    Створи гру і додай хоча б одного гравця, щоб побачити табло.
+                  </div>
+                  <div id="scoreboard" class="scoreboard hidden"></div>
+                </section>
+
+                <section class="panel board-panel">
+                  <div class="panel-heading board-header">
+                    <div>
+                      <h2>Host Board</h2>
+                      <p>Натисни на клітинку, щоб відкрити питання як ведучий гри.</p>
+                    </div>
+                    <button id="reload-board-btn" type="button" class="secondary-button">Оновити дошку</button>
+                  </div>
+
+                  <div id="pack-summary" class="pack-summary hidden">
+                    <h3 id="pack-name">Пак не вибрано</h3>
+                    <p id="pack-description">Опис з'явиться тут після завантаження дошки.</p>
+                  </div>
+
+                  <div id="board-empty" class="empty-state">
+                    Тут з'явиться Jeopardy-дошка після створення гри.
+                  </div>
+                  <div id="board" class="board hidden"></div>
+                </section>
+              </section>
+            </div>
+          </div>
+
+          <div id="host-stage-view" class="menu-view hidden">
+            <div class="subscreen-header">
+              <div>
+                <p class="eyebrow" id="host-stage-eyebrow">Host Stage</p>
+                <h2 id="host-stage-title">Ігрова дошка</h2>
+              </div>
+              <button id="host-stage-back-btn" type="button" class="secondary-button">Налаштування гри</button>
+            </div>
+
+            <section class="host-stage-layout">
+                <aside class="host-console">
+                  <div class="host-console-card">
+                    <p class="game-chip" id="host-console-chip">Ведучий</p>
+                    <div class="host-profile">
+                      <div class="host-avatar-shell">
+                        <div class="host-avatar-frame">
+                          <div id="host-avatar" class="host-avatar">H</div>
+                        </div>
+                        <p id="host-avatar-note" class="host-avatar-note">Avatar now, webcam later</p>
+                        <button id="host-camera-toggle-btn" type="button" class="camera-toggle-button">Увімкнути камеру</button>
+                      </div>
+                      <div class="host-profile-copy">
+                        <h3 id="host-display-name">Host</h3>
+                        <p id="host-display-role">Game master</p>
+                        <div class="host-game-summary">
+                          <strong id="host-console-game-name">Гра не вибрана</strong>
+                          <p id="host-console-game-meta">Створи гру, щоб відкрити дошку.</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="host-question-panel">
+                    <p class="game-chip" id="host-question-chip">Поточне питання</p>
+                    <h3 id="host-question-price">-</h3>
+                    <p id="host-question-text">Вибери клітинку на дошці.</p>
+                    <div id="host-answer-preview" class="host-answer-preview hidden"></div>
+                    <p id="host-answering-player" class="host-answering-player">Очікуємо першого buzz.</p>
+                    <div id="host-answer-actions" class="host-answer-actions hidden">
+                      <button id="host-correct-btn" type="button" class="host-correct-btn">Правильно</button>
+                      <button id="host-incorrect-btn" type="button" class="host-incorrect-btn">Не правильно</button>
+                    </div>
+                    <div id="final-submissions-panel" class="final-submissions-panel hidden"></div>
+                  </div>
+
+                <form id="stage-player-form" class="stacked-form compact-stack host-add-player hidden" aria-hidden="true">
+                  <h3 id="stage-add-player-title">Додати гравця</h3>
+                  <label>
+                    <span id="stage-player-name-label">Ім'я гравця</span>
+                    <input id="stage-player-name-input" type="text" placeholder="Наприклад: Oleg">
+                  </label>
+                  <button id="stage-add-player-btn" type="submit">Додати до гри</button>
+                </form>
+              </aside>
+
+              <section class="host-board-area">
+                <div id="host-board-empty" class="empty-state">Створи гру, щоб побачити дошку.</div>
+                <div id="host-board" class="host-board hidden"></div>
+              </section>
+            </section>
+
+            <section class="host-players-row" id="host-players-row"></section>
+          </div>
+
+            <div id="join-game-view" class="menu-view hidden">
+              <div class="subscreen-header">
+                <div>
+                  <p class="eyebrow">Player Screen</p>
+                  <h2>Приєднатися до гри</h2>
+              </div>
+              <button type="button" class="secondary-button back-menu-btn">Назад у меню</button>
+              </div>
+
+              <section class="panel join-code-panel">
+                <div class="panel-heading">
+                  <h2>Підключення до гри</h2>
+                  <p>Введи 6-значний код і натисни кнопку нижче.</p>
+                </div>
+
+                <div class="stacked-form compact-stack">
+                  <label>
+                    Код гри
+                    <input id="join-code-input" type="text" inputmode="numeric" maxlength="6" placeholder="123456">
+                  </label>
+                  <button id="find-game-btn" type="button">Приєднатися</button>
+                  <label class="hidden" aria-hidden="true">
+                    Гравець
+                    <select id="player-select">
+                      <option value="">Спочатку вибери гру</option>
+                    </select>
+                  </label>
+                  <button id="connect-live-btn" type="button" class="hidden" aria-hidden="true">Підключити live</button>
+                </div>
+              </section>
+            </div>
+
+            <div id="player-stage-view" class="menu-view hidden">
+              <div class="subscreen-header">
+                <div>
+                  <p class="eyebrow" id="player-stage-eyebrow">Player Stage</p>
+                  <h2 id="player-stage-title">Ігрова дошка</h2>
+                </div>
+                <button id="player-stage-back-btn" type="button" class="secondary-button">Змінити код</button>
+              </div>
+
+              <section class="player-stage-layout">
+                <aside class="host-console">
+                  <div class="host-console-card">
+                    <p class="game-chip" id="player-console-chip">Гравець</p>
+                    <div class="host-profile">
+                      <div class="host-avatar-shell">
+                        <div class="host-avatar-frame">
+                          <div id="player-avatar" class="host-avatar">P</div>
+                        </div>
+                      </div>
+                      <div class="host-profile-copy">
+                        <h3 id="player-display-name">Player</h3>
+                        <p id="player-display-role">Contestant</p>
+                        <button id="player-camera-toggle-btn" type="button" class="camera-toggle-button">Увімкнути мою камеру</button>
+                        <div class="host-game-summary">
+                          <strong id="player-game-name">Гра не вибрана</strong>
+                          <p id="player-game-meta">Після підключення тут з'явиться інформація про матч.</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                    <div class="host-question-panel">
+                      <p class="game-chip" id="player-question-chip">Поточне питання</p>
+                      <h3 id="player-question-price" class="hidden">-</h3>
+                      <p id="player-question-text" class="hidden">Очікуй, поки ведучий відкриє питання.</p>
+                      <div class="buzz-stage player-buzz-stage">
+                        <button id="buzz-btn" type="button" class="buzz-button buzz-button-large" disabled>Buzz</button>
+                        <button id="player-open-question-btn" type="button" class="secondary-button hidden">Open question</button>
+                        <form id="final-answer-form" class="final-answer-form hidden">
+                          <label>
+                            <span id="final-wager-label">Ставка</span>
+                            <input id="final-wager-input" type="number" min="0" step="1">
+                          </label>
+                          <label>
+                            <span id="final-answer-label">Відповідь</span>
+                            <textarea id="final-answer-input" rows="3" placeholder="Напиши свою відповідь"></textarea>
+                          </label>
+                          <button id="final-submit-answer-btn" type="submit">Надіслати відповідь</button>
+                          <p id="final-answer-status" class="final-answer-status"></p>
+                        </form>
+                        <div class="buzz-stage-info">
+                          <div class="buzz-card">
+                            <p class="buzz-label">Перший buzz</p>
+                            <strong id="first-buzz-display">Ще ніхто не натиснув</strong>
+                          </div>
+                        <div class="buzz-card">
+                          <p class="buzz-label">Остання подія</p>
+                          <strong id="last-event-display">Очікуємо старту гри</strong>
+                        </div>
+                      </div>
+                      <p id="live-status" class="live-status">Live-підключення ще не активне.</p>
+                    </div>
+                  </div>
+                </aside>
+
+                <section class="host-board-area">
+                  <div id="player-board-empty" class="empty-state">Після підключення тут з'явиться дошка.</div>
+                  <div id="player-board" class="host-board hidden"></div>
+                </section>
+              </section>
+
+              <section class="host-players-row" id="player-players-row"></section>
+                <section class="panel event-log-panel player-event-log-panel hidden" aria-hidden="true">
+                <div class="panel-heading">
+                  <h2>Журнал подій</h2>
+                  <p>Тут видно живі події з гри: відкриття питання, buzz і зміни рахунку.</p>
+                </div>
+
+                <div id="event-log" class="event-log">
+                  <p class="event-log-empty">Події з'являться тут після live-підключення.</p>
+                </div>
+              </section>
+            </div>
+
+          <div id="pack-builder-view" class="menu-view hidden">
+            <div class="subscreen-header">
+              <div>
+                <p class="eyebrow">Pack Builder</p>
+                <h2>Конструктор паків</h2>
+              </div>
+              <button type="button" class="secondary-button back-menu-btn">Назад у меню</button>
+            </div>
+            <div class="placeholder-panel">
+              <h3>Наступний етап</h3>
+              <p>Тут буде окремий редактор паків: назва паку, категорії, питання, ціна, медіа і порядок відображення.</p>
+            </div>
+
+            <div class="builder-layout">
+              <aside class="builder-sidebar">
+                <section class="builder-panel">
+                  <div class="panel-heading">
+                    <h3 id="builder-pack-section-title">Pack</h3>
+                    <p id="builder-pack-section-text">Create a pack or open an existing one.</p>
+                  </div>
+                  <div class="stacked-form compact-stack">
+                    <button id="builder-load-packs-btn" type="button" class="secondary-button">Load packs</button>
+                    <label>
+                      <span id="builder-existing-pack-label">Existing pack</span>
+                      <select id="builder-pack-select">
+                        <option value="">Load the list first</option>
+                      </select>
+                    </label>
+                  </div>
+                  <form id="builder-pack-form" class="stacked-form compact-stack">
+                    <label>
+                      <span id="builder-pack-name-label">Pack name</span>
+                      <input id="builder-pack-name-input" type="text" required>
+                    </label>
+                    <label>
+                      <span id="builder-pack-description-label">Description</span>
+                      <input id="builder-pack-description-input" type="text" required>
+                    </label>
+                    <button id="builder-create-pack-btn" type="submit">Create pack</button>
+                  </form>
+                </section>
+
+                <section class="builder-panel">
+                  <div class="panel-heading">
+                    <h3 id="builder-round-section-title">Round</h3>
+                    <p id="builder-round-section-text">Create boards inside one pack.</p>
+                  </div>
+                  <div class="stacked-form compact-stack">
+                    <label>
+                      <span id="builder-existing-round-label">Current round</span>
+                      <select id="builder-round-select">
+                        <option value="">Choose a pack first</option>
+                      </select>
+                    </label>
+                  </div>
+                  <form id="builder-round-form" class="stacked-form compact-stack">
+                    <label>
+                      <span id="builder-round-name-label">Round name</span>
+                      <input id="builder-round-name-input" type="text" required>
+                    </label>
+                    <label>
+                      <span id="builder-round-order-label">Order</span>
+                      <input id="builder-round-order-input" type="number" min="1" value="2">
+                    </label>
+                    <label>
+                      <span id="builder-round-type-label">Round type</span>
+                      <select id="builder-round-type-select">
+                        <option value="BOARD">Board</option>
+                        <option value="FINAL">Запитання для всіх</option>
+                      </select>
+                    </label>
+                    <button id="builder-create-round-btn" type="submit">Add round</button>
+                  </form>
+                </section>
+
+                <section class="builder-panel">
+                  <div class="panel-heading">
+                    <h3 id="builder-category-section-title">Category</h3>
+                    <p id="builder-category-section-text">Add columns to the selected pack.</p>
+                  </div>
+                  <form id="builder-category-form" class="stacked-form compact-stack">
+                    <label>
+                      <span id="builder-category-name-label">Category name</span>
+                      <input id="builder-category-name-input" type="text" required>
+                    </label>
+                    <label>
+                      <span id="builder-category-order-label">Order</span>
+                      <input id="builder-category-order-input" type="number" min="1" value="1">
+                    </label>
+                    <button id="builder-add-category-btn" type="submit">Add category</button>
+                  </form>
+                </section>
+
+                <section class="builder-panel">
+                  <div class="panel-heading">
+                    <h3 id="builder-question-section-title">Question</h3>
+                    <p id="builder-question-section-text">Add a clue to one category.</p>
+                  </div>
+                  <form id="builder-question-form" class="stacked-form compact-stack">
+                    <label>
+                      <span id="builder-question-category-label">Category</span>
+                      <select id="builder-question-category-select" required>
+                        <option value="">Choose a category first</option>
+                      </select>
+                    </label>
+                    <label>
+                      <span id="builder-question-text-label">Question text</span>
+                      <input id="builder-question-text-input" type="text" required>
+                    </label>
+                    <label>
+                      <span id="builder-question-answer-label">Answer</span>
+                      <input id="builder-question-answer-input" type="text" required>
+                    </label>
+                    <div class="builder-field-row">
+                      <label>
+                        <span id="builder-question-price-label">Price</span>
+                        <input id="builder-question-price-input" type="number" min="1" step="1" value="100" required>
+                      </label>
+                      <label>
+                        <span id="builder-question-order-label">Order</span>
+                        <input id="builder-question-order-input" type="number" min="1" value="1">
+                      </label>
+                    </div>
+                    <label>
+                      <span id="builder-question-media-url-label">Media URL</span>
+                      <input id="builder-question-media-url-input" type="text">
+                    </label>
+                    <label>
+                      <span id="builder-question-media-type-label">Media type</span>
+                      <input id="builder-question-media-type-input" type="text" placeholder="image/png">
+                    </label>
+                    <button id="builder-add-question-btn" type="submit">Add question</button>
+                  </form>
+                </section>
+              </aside>
+
+              <section class="builder-stage">
+                <section class="builder-current-pack">
+                  <p class="game-chip" id="builder-current-chip">Current pack</p>
+                  <h3 id="builder-current-pack-name">No pack selected</h3>
+                  <p id="builder-current-pack-meta">Create or select a pack to start editing.</p>
+                </section>
+                <section class="builder-board-panel">
+                  <div class="panel-heading board-header">
+                    <div>
+                      <h2 id="builder-board-title">Pack board</h2>
+                      <p id="builder-board-text">Categories and questions appear here after you add them.</p>
+                    </div>
+                  </div>
+                  <div id="builder-board-empty" class="empty-state">No categories yet.</div>
+                  <div id="builder-board" class="builder-board hidden"></div>
+                </section>
+              </section>
+            </div>
+          </div>
+
+          <div id="community-packs-view" class="menu-view hidden">
+            <div class="subscreen-header">
+              <div>
+                <p class="eyebrow">Community Packs</p>
+                <h2>Переглянути ком'юніті паки</h2>
+              </div>
+              <button type="button" class="secondary-button back-menu-btn">Назад у меню</button>
+            </div>
+            <div class="placeholder-panel">
+              <h3>Наступний етап</h3>
+              <p>Тут буде каталог публічних паків, рейтинги, теги, пошук і кнопка імпорту в свою бібліотеку.</p>
+            </div>
+          </div>
+
+          <div id="settings-view" class="menu-view hidden">
+            <div class="subscreen-header">
+              <div>
+                <p class="eyebrow">Settings</p>
+                <h2>Налаштування</h2>
+              </div>
+              <button type="button" class="secondary-button back-menu-btn">Назад у меню</button>
+            </div>
+            <section class="settings-grid">
+              <form id="avatar-settings-form" class="settings-card">
+                <div class="settings-avatar-preview" id="settings-avatar-preview">?</div>
+                <div class="settings-card-copy">
+                  <h3 id="settings-avatar-title">Аватарка гравця</h3>
+                  <p id="settings-avatar-text">Вибери зображення, яке буде видно на картках гравців під час гри.</p>
+                  <label class="avatar-file-label">
+                    <span id="settings-avatar-file-label">Файл аватарки</span>
+                    <input id="settings-avatar-input" type="file" accept="image/png,image/jpeg,image/webp,image/gif">
+                  </label>
+                  <div class="settings-actions">
+                    <button id="settings-save-avatar-btn" type="submit">Зберегти аватарку</button>
+                    <button id="settings-remove-avatar-btn" type="button" class="secondary-button">Прибрати</button>
+                  </div>
+                  <p id="settings-avatar-status" class="settings-status"></p>
+                </div>
+              </form>
+            </section>
+          </div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="question-modal" class="question-modal">
+    <div class="modal-card">
+      <div class="modal-head">
+        <div>
+          <p id="modal-category" class="modal-category">Категорія</p>
+          <h2 id="modal-price">100</h2>
+        </div>
+        <button id="close-modal-btn" type="button" class="icon-button" aria-label="Закрити">×</button>
+      </div>
+        <div id="modal-media" class="modal-media hidden"></div>
+        <p id="modal-question-text" class="modal-question-text">Текст питання</p>
+        <div id="modal-answer-block" class="modal-answer-block hidden">
+          <p class="answer-label">Відповідь</p>
+          <p id="modal-answer-text" class="modal-answer-text"></p>
+        </div>
+        <div id="modal-player-tools" class="modal-player-tools hidden">
+          <button id="modal-buzz-btn" type="button" class="buzz-button buzz-button-modal" disabled>Buzz</button>
+        </div>
+        <div class="modal-actions">
+          <button id="show-answer-btn" type="button" class="secondary-button">Показати відповідь</button>
+          <button id="mark-used-btn" type="button">Позначити як зігране</button>
+        </div>
+      </div>
+  </dialog>
+
+  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+  <script src="/webjars/sockjs-client/1.5.1/sockjs.min.js"></script>
+  <script src="/webjars/stomp-websocket/2.3.4/stomp.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
+

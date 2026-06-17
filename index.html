@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>DemoApp — User Test</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>DemoApp — User Test</h1>
+    <p>Короткий інтерфейс для швидкого тестування UX. Відповіді зберігаються локально і можуть бути експортовані.</p>
+  </header>
+
+  <main>
+    <section id="test-area">
+      <div id="intro">
+        <p>Виберіть пакет завдань або створіть новий через "Конструктор паків".</p>
+        <label>Пак: <select id="pack-select"><option value="">(локальний)</option></select></label>
+        <button id="load-pack-btn">Завантажити пакет</button>
+        <button id="new-pack-btn">Новий пакет</button>
+        <button id="start-btn">Почати тест</button>
+      </div>
+
+      <div id="question-area" class="hidden">
+        <div id="task">
+          <h2>Завдання</h2>
+          <p>Знайдіть і натисніть кнопку «Цільова кнопка» нижче.</p>
+          <button id="target-btn">Цільова кнопка</button>
+        </div>
+
+        <div id="survey">
+          <h3>Опитування</h3>
+          <label>Скільки часу зайняло виконання (секунд)? <input id="time-input" type="number" min="0"></label>
+          <label>Коментар: <input id="comment-input" type="text" placeholder="Короткий коментар"></label>
+          <button id="submit-response">Зберегти відповідь</button>
+        </div>
+      </div>
+
+      <div id="controls" class="hidden">
+        <button id="export-btn">Експорт результатів (JSON)</button>
+        <button id="reset-btn">Скинути</button>
+      </div>
+
+      <div id="pack-builder" class="hidden">
+        <h3>Конструктор паку</h3>
+        <label>Назва паку: <input id="pack-title" type="text"></label>
+        <label>Прості питання (JSON): <textarea id="pack-questions" placeholder='[{"label":"Знайдіть кнопку","taskLabel":"Цільова кнопка"}]'></textarea></label>
+        <button id="save-pack-btn">Зберегти пакет</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

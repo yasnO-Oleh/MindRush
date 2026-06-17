@@ -1,0 +1,14 @@
+[
+  {
+    "id": "default",
+    "title": "Default pack",
+    "description": "Стандартне завдання",
+    "tasks": [
+      {
+        "id": "t1",
+        "label": "Цільова кнопка",
+        "instruction": "Знайдіть і натисніть кнопку"
+      }
+    ]
+  }
+]
