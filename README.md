@@ -45,7 +45,7 @@ MindRush is a modern multiplayer quiz platform built with Java and Spring Boot. 
 ### Run the application
 1. Clone the repository and navigate to the project root:
 ```bash
-   git clone [https://github.com/yasnO-Oleh/MindRush.git](https://github.com/yasnO-Oleh/MindRush.git)
+   git clone https://github.com/yasnO-Oleh/MindRush.git
    cd MindRush
 ```
 2. Spin up the containers:
